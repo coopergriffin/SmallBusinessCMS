@@ -31,12 +31,11 @@ async function getEmployees() {
 }
 
 // Function to update an employee's role
-async function updateEmployeeRole(employeeId, newRoleId) {
+async function updateEmployee(employeeId, newFirstName, newLastName, newRoleId, newManagerId) {
     const connection = await connectToDatabase();
-    const [rows, fields] = await connection.execute('UPDATE employee SET role_id = ? WHERE id = ?', [newRoleId, employeeId]);
+    const [rows, fields] = await connection.execute('UPDATE employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?', [newFirstName, newLastName, newRoleId, newManagerId, employeeId]);
     return rows.affectedRows > 0;
 }
-
 
 
 // Function to delete an employee by id
@@ -52,6 +51,6 @@ async function deleteEmployee(employeeId) {
 module.exports = {
     createEmployee,
     getEmployees,
-    updateEmployeeRole,
+    updateEmployee,
     deleteEmployee
 };

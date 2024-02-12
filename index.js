@@ -23,7 +23,9 @@ async function mainMenu() {
             'Add a department',
             'Add a role',
             'Add an employee',
-            'Update an employee role',
+            'Update a role',
+            'Update a department',
+            'Update an employee',
             'Exit'
         ]
     });
@@ -102,8 +104,8 @@ async function mainMenu() {
             await employees.createEmployee(employeeInfo.firstName, employeeInfo.lastName, employeeInfo.roleId, employeeInfo.managerId);
             console.log('Employee added successfully!');
             break;
-        case 'Update an employee role':
-            const employeeToUpdate = await inquirer.prompt([
+        case 'Update a role':
+            const updateRole = await inquirer.prompt([
                 {
                     type: 'number',
                     name: 'employeeId',
@@ -118,9 +120,54 @@ async function mainMenu() {
             await employees.updateEmployeeRole(employeeToUpdate.employeeId, employeeToUpdate.newRoleId);
             console.log('Employee role updated successfully!');
             break;
-        case 'Exit':
-            console.log('Exiting...');
-            return;
+        case 'Update a department':
+            const departmentToUpdate = await inquirer.prompt([
+                {
+                    type: 'number',
+                    name: 'departmentId',
+                    message: 'Enter the ID of the department you want to update:'
+                },
+                {
+                    type: 'input',
+                    name: 'newName',
+                    message: 'Enter the new name for the department:'
+                }
+            ]);
+            await departments.updateDepartment(departmentToUpdate.departmentId, departmentToUpdate.newName);
+            console.log('Department updated successfully!');
+            break;
+        
+        case 'Update an employee':
+            const updateEmployee = await inquirer.prompt([
+                {
+                    type: 'number',
+                    name: 'employeeId',
+                    message: 'Enter the ID of the employee you want to update:'
+                },
+                {
+                    type: 'input',
+                    name: 'newFirstName',
+                    message: 'Enter the new first name for the employee:'
+                },
+                {
+                    type: 'input',
+                    name: 'newLastName',
+                    message: 'Enter the new last name for the employee:'
+                },
+                {
+                    type: 'number',
+                    name: 'newRoleId',
+                    message: 'Enter the new role ID for the employee:'
+                },
+                {
+                    type: 'number',
+                    name: 'newManagerId',
+                    message: 'Enter the new manager ID for the employee:'
+                }
+            ]);
+            await employees.updateEmployee(employeeToUpdate.employeeId, employeeToUpdate.newFirstName, employeeToUpdate.newLastName, employeeToUpdate.newRoleId, employeeToUpdate.newManagerId);
+            console.log('Employee updated successfully!');
+            break
     }
 
     // Function called to refresh main menu 
