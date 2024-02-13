@@ -26,6 +26,7 @@ async function mainMenu() {
             'Update a role',
             'Update a department',
             'Update an employee',
+            'Update an employee role',
             'Exit'
         ]
     });
@@ -168,6 +169,29 @@ async function mainMenu() {
             await employees.updateEmployee(employeeToUpdate.employeeId, employeeToUpdate.newFirstName, employeeToUpdate.newLastName, employeeToUpdate.newRoleId, employeeToUpdate.newManagerId);
             console.log('Employee updated successfully!');
             break
+        case 'Update an employee role':
+            const employeeToUpdateRole = await inquirer.prompt([
+                {
+                    type: 'number',
+                    name: 'employeeId',
+                    message: 'Enter the ID of the employee whose role you want to update:'
+                },
+                {
+                    type: 'number',
+                    name: 'newRoleId',
+                    message: 'Enter the new role ID for the employee:'
+                }
+            ]);
+            const isEmployeeRoleUpdated = await employees.updateEmployeeRole(employeeToUpdateRole.employeeId, employeeToUpdateRole.newRoleId);
+            if (isEmployeeRoleUpdated) {
+                console.log('Employee role updated successfully!');
+            } else {
+                console.log('Failed to update employee role. Employee with specified ID may not exist or role with specified ID may not exist.');
+            }
+            break;
+        case 'Exit':
+            console.log('Exiting...');
+            process.exit(); // Exiting the application
     }
 
     // Function called to refresh main menu 

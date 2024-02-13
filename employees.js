@@ -45,6 +45,12 @@ async function deleteEmployee(employeeId) {
     return rows.affectedRows > 0;
 }
 
+async function updateEmployeeRole(employeeId, newRoleId) {
+    const connection = await connectToDatabase();
+    const [rows, fields] = await connection.execute('UPDATE employee SET role_id = ? WHERE id = ?', [newRoleId, employeeId]);
+    return rows.affectedRows > 0;
+}
+
 
 
 //Lets the respective functions access outside of this file 
@@ -52,5 +58,7 @@ module.exports = {
     createEmployee,
     getEmployees,
     updateEmployee,
-    deleteEmployee
+    deleteEmployee,
+    updateEmployeeRole
+
 };
