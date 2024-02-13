@@ -1,4 +1,6 @@
+-- Cooper Griffin 
 -- schema.sql
+
 CREATE DATABASE IF NOT EXISTS company_db;
 
 USE company_db;
