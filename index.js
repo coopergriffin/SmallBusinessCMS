@@ -106,20 +106,34 @@ async function mainMenu() {
             console.log('Employee added successfully!');
             break;
         case 'Update a role':
-            const updateRole = await inquirer.prompt([
+            const roleToUpdate = await inquirer.prompt([
                 {
                     type: 'number',
-                    name: 'employeeId',
-                    message: 'Enter the ID of the employee you want to update:'
+                    name: 'roleId',
+                    message: 'Enter the ID of the role you want to update:'
+                },
+                {
+                    type: 'input',
+                    name: 'newTitle',
+                    message: 'Enter the new title for the role:'
                 },
                 {
                     type: 'number',
-                    name: 'newRoleId',
-                    message: 'Enter the new role ID for the employee:'
+                    name: 'newSalary',
+                    message: 'Enter the new salary for the role:'
+                },
+                {
+                    type: 'number',
+                    name: 'newDepartmentId',
+                    message: 'Enter the new department ID for the role:'
                 }
             ]);
-            await employees.updateEmployeeRole(employeeToUpdate.employeeId, employeeToUpdate.newRoleId);
-            console.log('Employee role updated successfully!');
+            const isRoleUpdated = await roles.updateRole(roleToUpdate.roleId, roleToUpdate.newTitle, roleToUpdate.newSalary, roleToUpdate.newDepartmentId);
+            if (isRoleUpdated) {
+                console.log('Role updated successfully!');
+            } else {
+                console.log('Failed to update role. Role with specified ID may not exist.');
+            }
             break;
         case 'Update a department':
             const departmentToUpdate = await inquirer.prompt([
@@ -166,7 +180,7 @@ async function mainMenu() {
                     message: 'Enter the new manager ID for the employee:'
                 }
             ]);
-            await employees.updateEmployee(employeeToUpdate.employeeId, employeeToUpdate.newFirstName, employeeToUpdate.newLastName, employeeToUpdate.newRoleId, employeeToUpdate.newManagerId);
+            await employees.updateEmployee(updateEmployee.employeeId, updateEmployee.newFirstName, updateEmployee.newLastName, updateEmployee.newRoleId, updateEmployee.newManagerId);
             console.log('Employee updated successfully!');
             break
         case 'Update an employee role':
